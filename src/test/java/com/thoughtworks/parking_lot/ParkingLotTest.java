@@ -15,8 +15,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,6 +68,32 @@ public class ParkingLotTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void should_return_page_with_parkingLot_when_use_page_search_parking_lot_() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setParkingLotCapacity(10);
+        parkingLot.setParkingLotName("owen's parking lot");
+        parkingLot.setParkingLotPosition("Honkong");
+        ParkingLot parkingLot1=new ParkingLot();
+        parkingLot1.setParkingLotCapacity(10);
+        parkingLot1.setParkingLotName("owen's parking lot--");
+        parkingLot1.setParkingLotPosition("Honkongsss");
+        parkingLotRepository.save(parkingLot);
+        parkingLotRepository.save(parkingLot1);
+
+        //when
+        String result= this.mockMvc.perform(get("/parkinglots/").param("page","1").param("pageSize","5")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+        //then
+        JSONArray jsonArray = new JSONArray(result);
+        Assertions.assertEquals("owen's parking lot--",jsonArray.getJSONObject(1).getString("parkingLotName"));
 
     }
 }
