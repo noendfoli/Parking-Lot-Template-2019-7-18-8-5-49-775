@@ -96,4 +96,46 @@ public class ParkingLotTest {
         Assertions.assertEquals("owen's parking lot--",jsonArray.getJSONObject(1).getString("parkingLotName"));
 
     }
+
+    @Test
+    public void should_return_parkinglot_when_get_parking_lot_by_id() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setParkingLotCapacity(10);
+        parkingLot.setParkingLotName("owen's parking lot");
+        parkingLot.setParkingLotPosition("Honkong");
+        ParkingLot parkingLot1=parkingLotRepository.save(parkingLot);
+        //when
+
+        String result=this.mockMvc.perform(get("/parkinglots/"+parkingLot1.getParkingLotId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        //then
+        JSONObject jsonObject=new JSONObject(result);
+        Assertions.assertEquals("owen's parking lot",jsonObject.getString("parkingLotName"));
+
+    }
+
+    @Test
+    public void should_return_parkinglot_when_put_parkinglot() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setParkingLotCapacity(10);
+        parkingLot.setParkingLotName("owen's parking lot");
+        parkingLot.setParkingLotPosition("Honkong");
+        ParkingLot parkingLot1=parkingLotRepository.save(parkingLot);
+        //when
+        parkingLot.setParkingLotName("zhuhai");
+        JSONObject jsonObject = new JSONObject(parkingLot);
+
+        String result=this.mockMvc.perform(put("/parkinglots").content(jsonObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        //then
+        JSONObject jsonObject1=new JSONObject(result);
+        Assertions.assertEquals("zhuhai",jsonObject.getString("parkingLotName"));
+
+    }
 }

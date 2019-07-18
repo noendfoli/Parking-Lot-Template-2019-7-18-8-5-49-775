@@ -27,4 +27,13 @@ public class ParkingLotService {
         return parkingLots.getContent();
 
     }
+
+    public ParkingLot findParkingLotByID(String id) {
+        return parkingLotRepository.findById(id).get();
+    }
+
+    public ParkingLot changeParkingLot(ParkingLot parkingLot) {
+        ParkingLot pk = parkingLotRepository.saveAndFlush(parkingLot);
+        return pk;
+    }
 }

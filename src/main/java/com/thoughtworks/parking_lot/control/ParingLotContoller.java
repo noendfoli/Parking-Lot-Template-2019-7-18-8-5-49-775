@@ -33,4 +33,16 @@ public class ParingLotContoller {
         List<ParkingLot> parkingLots=parkingLotService.countParkingLotByPage(page,pageSize);
         return ResponseEntity.ok().body(parkingLots);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getParkingLotByID(@PathVariable("id") String id) {
+        ParkingLot parkingLot=parkingLotService.findParkingLotByID(id);
+        return ResponseEntity.ok().body(parkingLot);
+    }
+
+    @PutMapping
+    public ResponseEntity modifyParkingLot(@RequestBody ParkingLot parkingLot) {
+        ParkingLot pk=parkingLotService.changeParkingLot(parkingLot);
+        return ResponseEntity.ok().body(pk);
+    }
 }
