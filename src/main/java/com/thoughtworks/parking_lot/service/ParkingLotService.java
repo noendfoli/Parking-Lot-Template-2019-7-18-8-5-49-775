@@ -13,4 +13,8 @@ public class ParkingLotService {
         ParkingLot pk = parkingLotRepository.save(parkingLot);
         return pk == null?false:true;
     }
+
+    public void deletePrakingLot(String id) {
+        parkingLotRepository.deleteById(id);
+    }
 }

@@ -34,7 +34,7 @@ public class ParkingLotTest {
     @Autowired
     MockMvc mockMvc;
     @Test
-    public void should_return_status_created_when_add_parking_lot_to_system() throws Exception{
+    public void should_return_created_when_add_parking_lot() throws Exception{
         //given
         ParkingLot parkingLot=new ParkingLot();
         parkingLot.setParkingLotName("owen's parking lot");
@@ -46,5 +46,23 @@ public class ParkingLotTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void should_return_is_ok_when_delete_parking_lot_by_id() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setParkingLotCapacity(10);
+        parkingLot.setParkingLotName("owen's parking lot");
+        parkingLot.setParkingLotPosition("Honkong");
+        JSONObject jsonObject = new JSONObject(parkingLot);
+        ParkingLot parkingLot1=parkingLotRepository.save(parkingLot);
+        //when
+        //then
+        this.mockMvc.perform(delete("/parkinglots/"+parkingLot1.getParkingLotId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
     }
 }
