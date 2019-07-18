@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PARKING_LOT")
 public class ParkingLot {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -13,15 +12,22 @@ public class ParkingLot {
     private  String parkingLotId;
     @Column(unique = true)
     private String parkingLotName;
-    private int parkingLotcapacity;
+    private int parkingLotCapacity;
     private String parkingLotPosition;
 
     public ParkingLot() {
     }
 
+    public ParkingLot(String parkingLotId, String parkingLotName, int parkingLotCapacity, String parkingLotPosition) {
+        this.parkingLotId = parkingLotId;
+        this.parkingLotName = parkingLotName;
+        this.parkingLotCapacity = parkingLotCapacity;
+        this.parkingLotPosition = parkingLotPosition;
+    }
+
     public ParkingLot(String parkingLotName, int parkingLotcapacity, String parkingLotPosition) {
         this.parkingLotName = parkingLotName;
-        this.parkingLotcapacity = parkingLotcapacity;
+        this.parkingLotCapacity = parkingLotcapacity;
         this.parkingLotPosition = parkingLotPosition;
     }
 
@@ -41,12 +47,12 @@ public class ParkingLot {
         this.parkingLotName = parkingLotName;
     }
 
-    public int getParkingLotcapacity() {
-        return parkingLotcapacity;
+    public int getParkingLotCapacity() {
+        return parkingLotCapacity;
     }
 
-    public void setParkingLotcapacity(int parkingLotcapacity) {
-        this.parkingLotcapacity = parkingLotcapacity;
+    public void setParkingLotCapacity(int parkingLotCapacity) {
+        this.parkingLotCapacity = parkingLotCapacity;
     }
 
     public String getParkingLotPosition() {

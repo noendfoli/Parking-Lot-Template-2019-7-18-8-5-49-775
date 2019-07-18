@@ -37,8 +37,8 @@ public class ParkingLotTest {
     public void should_return_status_created_when_add_parking_lot_to_system() throws Exception{
         //given
         ParkingLot parkingLot=new ParkingLot();
-        parkingLot.setParkingLotcapacity(10);
         parkingLot.setParkingLotName("owen's parking lot");
+        parkingLot.setParkingLotCapacity(10);
         parkingLot.setParkingLotPosition("Honkong");
         JSONObject jsonObject = new JSONObject(parkingLot);
         //when//then
