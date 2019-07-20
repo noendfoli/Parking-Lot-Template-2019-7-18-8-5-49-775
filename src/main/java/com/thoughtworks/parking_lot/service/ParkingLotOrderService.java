@@ -2,7 +2,7 @@ package com.thoughtworks.parking_lot.service;
 
 import com.thoughtworks.parking_lot.entiry.Car;
 import com.thoughtworks.parking_lot.entiry.ParkingLot;
-import com.thoughtworks.parking_lot.entiry.ParkingOrder;
+import com.thoughtworks.parking_lot.entiry.ParkingLotOrder;
 import com.thoughtworks.parking_lot.entiry.ParkingOrderStatusEnum;
 import com.thoughtworks.parking_lot.repository.ParkingLotOrderRepository;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
@@ -25,12 +25,12 @@ public class ParkingLotOrderService {
         ParkingLot pk1 = parkingLotRepository.findById(paringLot1.getParkingLotId()).get();
         System.out.println(pk1.getParkingLotId());
         if(pk1.parkingCarIntoParkingLot(car)){
-            ParkingOrder parkingOrder = new ParkingOrder();
+            ParkingLotOrder parkingOrder = new ParkingLotOrder();
             parkingOrder.setParkingLot(pk1);
             parkingOrder.setCarId(car.getCarId());
             parkingOrder.setStartTime(LocateDateUtil.getLocalDateTime(new Date()));
             parkingOrder.setOrderStatus(ParkingOrderStatusEnum.OPEN_ORDER.getCode());
-            ParkingOrder po =  parkingLotOrderRepository.save(parkingOrder);
+            ParkingLotOrder po =  parkingLotOrderRepository.save(parkingOrder);
             return po == null?false:true;
         }
         return false;

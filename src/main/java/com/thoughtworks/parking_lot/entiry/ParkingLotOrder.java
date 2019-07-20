@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "PARKING_LOT_ORDER")
-public class ParkingOrder {
+public class ParkingLotOrder {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid")
@@ -23,6 +23,6 @@ public class ParkingOrder {
     private LocalDateTime endTime;
     private int orderStatus;
 
-    public ParkingOrder() {
+    public ParkingLotOrder() {
     }
 }
