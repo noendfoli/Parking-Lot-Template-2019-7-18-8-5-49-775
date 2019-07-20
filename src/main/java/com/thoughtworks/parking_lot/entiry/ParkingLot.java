@@ -3,6 +3,7 @@ package com.thoughtworks.parking_lot.entiry;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class ParkingLot {
@@ -14,7 +15,9 @@ public class ParkingLot {
     private String parkingLotName;
     private int parkingLotCapacity;
     private String parkingLotPosition;
-
+    @OneToMany
+    @JoinColumn(name = "parkingLotId")
+    private List<Car> parkingSpace;
     public ParkingLot() {
     }
 
