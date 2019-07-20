@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Table(name = "PARKING_LOT_ORDER")
 public class ParkingOrder {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -17,9 +18,7 @@ public class ParkingOrder {
     @OneToOne
     @JoinColumn(name = "parking_lot_name")
     private ParkingLot parkingLot;
-    @OneToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+    private String carId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int orderStatus;
