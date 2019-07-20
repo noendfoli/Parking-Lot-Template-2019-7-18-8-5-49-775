@@ -7,9 +7,11 @@ import com.thoughtworks.parking_lot.entiry.ParkingOrderStatusEnum;
 import com.thoughtworks.parking_lot.repository.ParkingLotOrderRepository;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import com.thoughtworks.parking_lot.util.LocateDateUtil;
+import org.h2.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -34,5 +36,13 @@ public class ParkingLotOrderService {
             return po == null?false:true;
         }
         return false;
+    }
+
+    public ParkingLotOrder endParkingLotOrder(Car car) {
+        ParkingLotOrder openOrder = parkingLotOrderRepository.findOpenOrderByCarId(car.getCarId());
+        openOrder.setOrderStatus(ParkingOrderStatusEnum.END_ORDER.getCode());
+        openOrder.setEndTime(LocateDateUtil.getLocalDateTime(new Date()));
+        ParkingLotOrder endOrder = parkingLotOrderRepository.saveAndFlush(openOrder);
+        return endOrder;
     }
 }
