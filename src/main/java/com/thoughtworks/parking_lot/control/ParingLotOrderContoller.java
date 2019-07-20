@@ -14,7 +14,7 @@ public class ParingLotOrderContoller {
     @Autowired
     private ParkingLotOrderService parkingLotOrderService;
     @PostMapping()
-    public ResponseEntity addNewParkingLotOrder(@RequestBody Car car){
+    public ResponseEntity addNewParkingLotOrder(@RequestBody Car car)throws Exception{
         Boolean pakringResult  = parkingLotOrderService.addNewParkingLotOrder(car);
         if(pakringResult){
             return ResponseEntity.status(HttpStatus.CREATED).build();

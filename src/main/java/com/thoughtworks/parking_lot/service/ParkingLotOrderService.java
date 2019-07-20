@@ -20,12 +20,8 @@ public class ParkingLotOrderService {
     private ParkingLotRepository parkingLotRepository;
     @Autowired
     private ParkingLotOrderRepository parkingLotOrderRepository;
-    public Boolean addNewParkingLotOrder(Car car){
-        ParkingLot paringLot = new ParkingLot("owens parking lot",10,"Honkong");
-        ParkingLot paringLot1 = parkingLotRepository.save(paringLot);
-        System.out.println(paringLot1.getParkingLotId());
-        ParkingLot pk1 = parkingLotRepository.findById(paringLot1.getParkingLotId()).get();
-        System.out.println(pk1.getParkingLotId());
+    public Boolean addNewParkingLotOrder(Car car)throws Exception{
+        ParkingLot pk1 = parkingLotRepository.findAll().get(0);
         if(pk1.parkingCarIntoParkingLot(car)){
             ParkingLotOrder parkingOrder = new ParkingLotOrder();
             parkingOrder.setParkingLot(pk1);
@@ -33,7 +29,7 @@ public class ParkingLotOrderService {
             parkingOrder.setStartTime(LocateDateUtil.getLocalDateTime(new Date()));
             parkingOrder.setOrderStatus(ParkingOrderStatusEnum.OPEN_ORDER.getCode());
             ParkingLotOrder po =  parkingLotOrderRepository.save(parkingOrder);
-            return po == null?false:true;
+            return po != null;
         }
         return false;
     }

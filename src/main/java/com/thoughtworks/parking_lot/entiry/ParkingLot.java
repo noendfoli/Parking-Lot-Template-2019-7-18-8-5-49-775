@@ -1,5 +1,6 @@
 package com.thoughtworks.parking_lot.entiry;
 
+import com.thoughtworks.parking_lot.exception.BusinessException;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -63,9 +64,9 @@ public class ParkingLot {
     public void setParkingLotPosition(String parkingLotPosition) {
         this.parkingLotPosition = parkingLotPosition;
     }
-    public boolean parkingCarIntoParkingLot(Car car){
+    public boolean parkingCarIntoParkingLot(Car car)throws Exception{
         if(this.parkingLotCapacity == 0){
-            return false;
+            throw new BusinessException("1001","停车场已经满","/parkinglots/parkingLotOrders");
         }
         this.parkingLotCapacity--;
         return true;
